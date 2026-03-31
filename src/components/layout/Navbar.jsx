@@ -3,10 +3,12 @@ import { Search, Globe, ChevronDown, Menu } from 'lucide-react';
 import NavigationDrawer from './NavigationDrawer';
 import PartnerMegaMenu from './PartnerMegaMenu';
 import MobileMenu from './MobileMenu';
+import SearchOverlay from './SearchOverlay';
 
 const Navbar = () => {
   const [activeDrawer, setActiveDrawer] = useState(null);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [searchOpen, setSearchOpen] = useState(false);
 
   const drawerData = {
     PRODUCTS: {
@@ -238,7 +240,12 @@ const Navbar = () => {
             </div>
 
             {/* Search — always visible */}
-            <button className="p-2 hover:bg-gray-100 rounded-full transition-colors">
+            <button
+              id="search-toggle"
+              className="p-2 hover:bg-gray-100 rounded-full transition-colors"
+              onClick={() => setSearchOpen(true)}
+              aria-label="Open search"
+            >
               <Search size={20} strokeWidth={1.5} className="md:w-[22px] md:h-[22px]" />
             </button>
 
@@ -274,6 +281,12 @@ const Navbar = () => {
         onClose={() => setMobileMenuOpen(false)}
         navLinks={navLinks}
         drawerData={drawerData}
+      />
+
+      {/* Search Overlay */}
+      <SearchOverlay
+        isOpen={searchOpen}
+        onClose={() => setSearchOpen(false)}
       />
     </>
   );
