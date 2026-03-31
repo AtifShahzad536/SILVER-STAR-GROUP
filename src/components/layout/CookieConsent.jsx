@@ -5,10 +5,8 @@ const CookieConsent = () => {
   const [showPopup, setShowPopup] = useState(false);
 
   useEffect(() => {
-    // Check if user already responded in localStorage
     const consent = localStorage.getItem('cookie_consent');
     if (!consent) {
-      // First time visitor: show popup after a short delay for smooth effect
       const timer = setTimeout(() => setShowPopup(true), 1500);
       return () => clearTimeout(timer);
     }
@@ -22,55 +20,60 @@ const CookieConsent = () => {
   return (
     <>
       {/* Floating Action Button - Bottom Left */}
-      <button 
+      <button
         onClick={() => setShowPopup(true)}
-        className="fixed bottom-6 left-6 z-[90] w-12 h-12 bg-white rounded-xl flex items-center justify-center shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all border border-gray-100 group"
+        className="fixed bottom-4 left-4 sm:bottom-6 sm:left-6 z-[90] w-10 h-10 sm:w-12 sm:h-12 bg-white rounded-xl flex items-center justify-center shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all border border-gray-100 group"
         aria-label="Privacy settings"
       >
-        <Cookie size={24} className="text-black group-hover:rotate-12 transition-transform" strokeWidth={1.5} />
+        <Cookie size={20} className="text-black group-hover:rotate-12 transition-transform sm:w-6 sm:h-6" strokeWidth={1.5} />
       </button>
 
       {/* Popup Overlay */}
       {showPopup && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/40 backdrop-blur-sm p-4 animate-fade-in">
-          <div className="bg-white rounded-sm p-10 max-w-[600px] w-full shadow-2xl relative flex flex-col items-center">
-            
-            <Cookie size={32} className="mb-6 text-black" strokeWidth={2} />
-            
-            <h2 className="text-2xl font-bold mb-4 tracking-tight">We respect your privacy</h2>
-            
-            <p className="text-[15px] font-medium text-black leading-relaxed mb-6 text-center max-w-[500px]">
-              We use cookies and similar technologies to personalise content and measure <br/>
-              performance. By giving your consent, you allow us to use this data; you can <br/>
-              change your settings by clicking Preferences.
-              <br />
-              <a href="#" className="underline mt-1 inline-block hover:text-gray-600 transition-colors">Read more about our cookie policy</a>
+        <div className="fixed inset-0 z-[100] flex items-end sm:items-center justify-center bg-black/40 backdrop-blur-sm p-3 sm:p-4 animate-fade-in">
+          <div className="bg-white rounded-t-2xl sm:rounded-sm w-full sm:max-w-[600px] shadow-2xl relative flex flex-col items-center
+                          px-5 py-7 sm:p-10">
+
+            <Cookie size={24} className="mb-4 sm:mb-6 text-black sm:w-8 sm:h-8" strokeWidth={2} />
+
+            <h2 className="text-lg sm:text-2xl font-bold mb-3 sm:mb-4 tracking-tight text-center">
+              We respect your privacy
+            </h2>
+
+            <p className="text-[13px] sm:text-[15px] font-medium text-black leading-relaxed mb-5 sm:mb-6 text-center max-w-full sm:max-w-[500px]">
+              We use cookies and similar technologies to personalise content and measure
+              performance. By giving your consent, you allow us to use this data; you can
+              change your settings by clicking Preferences.{' '}
+              <a href="#" className="underline mt-1 inline-block hover:text-gray-600 transition-colors">
+                Read more about our cookie policy
+              </a>
             </p>
-            
-            <div className="flex w-full justify-between items-center mt-4">
-              <button 
-                className="text-sm font-bold hover:text-gray-600 transition-colors tracking-wide"
+
+            {/* Buttons row — stacks on very small, row on sm+ */}
+            <div className="flex flex-col sm:flex-row w-full sm:justify-between sm:items-center gap-3 sm:gap-0 mt-2 sm:mt-4">
+              <button
+                className="text-xs sm:text-sm font-bold hover:text-gray-600 transition-colors tracking-wide text-center sm:text-left"
                 onClick={() => handleResponse('preferences')}
               >
                 Preferences
               </button>
-              
-              <div className="flex gap-4">
-                <button 
-                  className="px-10 py-3 border-[1.5px] border-black text-black font-bold text-sm tracking-wide hover:bg-black hover:text-white transition-colors"
+
+              <div className="flex gap-2 sm:gap-4 w-full sm:w-auto">
+                <button
+                  className="flex-1 sm:flex-none px-5 sm:px-10 py-2.5 sm:py-3 border-[1.5px] border-black text-black font-bold text-xs sm:text-sm tracking-wide hover:bg-black hover:text-white transition-colors"
                   onClick={() => handleResponse('accepted')}
                 >
                   Accept
                 </button>
-                <button 
-                  className="px-10 py-3 border-[1.5px] border-black text-black font-bold text-sm tracking-wide hover:bg-black hover:text-white transition-colors"
+                <button
+                  className="flex-1 sm:flex-none px-5 sm:px-10 py-2.5 sm:py-3 border-[1.5px] border-black text-black font-bold text-xs sm:text-sm tracking-wide hover:bg-black hover:text-white transition-colors"
                   onClick={() => handleResponse('declined')}
                 >
                   Decline
                 </button>
               </div>
             </div>
-            
+
           </div>
         </div>
       )}
