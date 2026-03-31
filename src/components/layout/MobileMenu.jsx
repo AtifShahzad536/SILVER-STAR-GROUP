@@ -19,6 +19,14 @@ const SlideAccordion = ({ isOpen, children, style = {} }) => {
     if (isOpen) {
       const h = inner.scrollHeight;
       outer.style.height = h + 'px';
+      
+      // Once transition finishes, set height -> auto so nested accordions can grow
+      const timer = setTimeout(() => {
+        if (outer.style.height !== '0px') {
+          outer.style.height = 'auto';
+        }
+      }, 380);
+      return () => clearTimeout(timer);
     } else {
       // Snap current live height → 0 so the transition plays even mid-animation
       outer.style.height = outer.offsetHeight + 'px';
@@ -279,17 +287,15 @@ const MobileMenu = ({ isOpen, onClose, navLinks, drawerData }) => {
           borderBottom: '1px solid #f3f4f6',
         }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 7, cursor: 'pointer' }}>
-            <div style={{ position: 'relative', width: 26, height: 26 }}>
-              <div style={{
-                position: 'absolute', top: 0,
-                width: 0, height: 0,
-                borderLeft: '13px solid transparent',
-                borderRight: '13px solid transparent',
-                borderBottom: '22px solid #111',
-              }} />
+            <div style={{ position: 'relative', width: 30, height: 30 }}>
+              <img
+                src="/logo_silverstar1.png"
+                alt="Silver Star Group"
+                style={{ width: '100%', height: '100%', objectFit: 'contain' }}
+              />
             </div>
             <span style={{ fontSize: 17, fontWeight: 900, letterSpacing: '-0.04em', marginTop: 2 }}>
-              SELECT
+              SILVER STAR
             </span>
           </div>
 
@@ -311,7 +317,7 @@ const MobileMenu = ({ isOpen, onClose, navLinks, drawerData }) => {
         <div
           style={{
             overflowY: 'auto', flex: 1,
-            padding: '4px 20px 28px',
+            padding: '4px 20px 80px',
             WebkitOverflowScrolling: 'touch',
           }}
         >
