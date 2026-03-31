@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
-import { Search, Globe, ChevronDown } from 'lucide-react';
+import { Search, Globe, ChevronDown, Menu } from 'lucide-react';
 import NavigationDrawer from './NavigationDrawer';
 import PartnerMegaMenu from './PartnerMegaMenu';
+import MobileMenu from './MobileMenu';
 
 const Navbar = () => {
   const [activeDrawer, setActiveDrawer] = useState(null);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const drawerData = {
     PRODUCTS: {
@@ -150,7 +152,7 @@ const Navbar = () => {
         }
       ]
     },
-     EXPLORE: {
+    EXPLORE: {
       categories: [
         'GUIDES', 'CATALOGUE', 'SELECT LAB'
       ],
@@ -163,12 +165,12 @@ const Navbar = () => {
     },
     'ABOUT US': {
       categories: [
-        'ABOUT SELECT', 'CONTACT', 'CSR', 'ENVIROMENTAL TRANSITION', 
+        'ABOUT SELECT', 'CONTACT', 'CSR', 'ENVIROMENTAL TRANSITION',
         'PRESS & NEWS', 'CHARITY', 'SPONSORSHIPS'
       ],
       hideChevrons: true,
       bottomImage: {
-        src: 'https://images.unsplash.com/photo-1532996122724-e3c354a0b15f?q=80&w=800&auto=format&fit=crop', 
+        src: 'https://images.unsplash.com/photo-1532996122724-e3c354a0b15f?q=80&w=800&auto=format&fit=crop',
         alt: 'Environmental transition',
         title: 'Environmental transition',
         isRawImage: true,
@@ -186,67 +188,94 @@ const Navbar = () => {
   ];
 
   return (
-    <nav className="sticky top-0 z-50 w-full bg-white/95 backdrop-blur-sm border-b border-gray-100">
-      <div className="max-w-[1440px] mx-auto px-6 h-20 flex items-center justify-between">
-        {/* Logo */}
-        <div className="flex items-center gap-2 group cursor-pointer">
-          <div className="relative w-10 h-10 flex flex-col items-center justify-center">
-            <div className="absolute top-0 w-0 h-0 border-l-[20px] border-l-transparent border-r-[20px] border-r-transparent border-b-[35px] border-b-black group-hover:scale-110 transition-transform duration-300"></div>
-          </div>
-          <span className="text-2xl font-black tracking-tighter mt-1">SELECT</span>
-        </div>
+    <>
+      <nav className="sticky top-0 z-50 w-full bg-white/95 backdrop-blur-sm border-b border-gray-100">
+        <div className="max-w-[1440px] mx-auto px-4 md:px-6 h-16 md:h-20 flex items-center justify-between">
 
-        {/* Navigation Links */}
-        <div className="hidden md:flex items-center gap-10">
-          {navLinks.map((link) => (
-            <div 
-              key={link} 
-              className="flex items-center gap-1 cursor-pointer group"
-              onClick={() => {
-                if (link === 'PRODUCTS' || link === 'SPORT' || link === 'EXPLORE' || link === 'PARTNER WITH US' || link === 'ABOUT US') {
+          {/* Logo */}
+          <div className="flex items-center gap-2 group cursor-pointer">
+            <div className="relative w-8 h-8 md:w-10 md:h-10 flex flex-col items-center justify-center">
+              <div className="absolute top-0 w-0 h-0 border-l-[16px] md:border-l-[20px] border-l-transparent border-r-[16px] md:border-r-[20px] border-r-transparent border-b-[28px] md:border-b-[35px] border-b-black group-hover:scale-110 transition-transform duration-300" />
+            </div>
+            <span className="text-xl md:text-2xl font-black tracking-tighter mt-1">SELECT</span>
+          </div>
+
+          {/* Desktop Navigation Links — hidden below lg */}
+          <div className="hidden lg:flex items-center gap-10">
+            {navLinks.map((link) => (
+              <div
+                key={link}
+                className="flex items-center gap-1 cursor-pointer group"
+                onClick={() => {
                   if (activeDrawer === link) {
-                    setActiveDrawer(null); // toggle off
+                    setActiveDrawer(null);
                   } else {
                     setActiveDrawer(link);
                   }
-                }
-              }}
-            >
-              <span className={`nav-link text-xs tracking-widest ${activeDrawer === link ? 'font-bold' : ''}`}>{link}</span>
-              {(link === 'PRODUCTS' || link === 'SPORT' || link === 'EXPLORE' || link === 'PARTNER WITH US' || link === 'ABOUT US') && (
-                <ChevronDown size={14} className={`transition-transform duration-300 ${(activeDrawer === link) ? 'rotate-180' : 'group-hover:rotate-180'}`} />
-              )}
-            </div>
-          ))}
-        </div>
-
-        {/* Right Section */}
-        <div className="flex items-center gap-6">
-          <div className="flex items-center gap-2 cursor-pointer hover:opacity-70 transition-opacity">
-            <div className="w-5 h-5 rounded-full overflow-hidden flex items-center justify-center bg-blue-600">
-              <Globe size={14} className="text-white" />
-            </div>
-            <span className="text-xs font-normal flex items-center gap-1">
-              International <ChevronDown size={12} />
-            </span>
+                }}
+              >
+                <span className={`nav-link text-xs tracking-widest ${activeDrawer === link ? 'font-bold' : ''}`}>
+                  {link}
+                </span>
+                <ChevronDown
+                  size={14}
+                  className={`transition-transform duration-300 ${activeDrawer === link ? 'rotate-180' : 'group-hover:rotate-180'}`}
+                />
+              </div>
+            ))}
           </div>
-          <button className="p-2 hover:bg-gray-100 rounded-full transition-colors">
-            <Search size={22} strokeWidth={1.5} />
-          </button>
-        </div>
-      </div>
-      
-      <NavigationDrawer 
-        isOpen={!!activeDrawer && activeDrawer !== 'PARTNER WITH US'} 
-        onClose={() => setActiveDrawer(null)} 
-        data={activeDrawer && activeDrawer !== 'PARTNER WITH US' ? drawerData[activeDrawer] : null}
-      />
 
-      <PartnerMegaMenu
-        isOpen={activeDrawer === 'PARTNER WITH US'}
-        onClose={() => setActiveDrawer(null)}
+          {/* Right Section */}
+          <div className="flex items-center gap-3 md:gap-4 lg:gap-6">
+            {/* Language — desktop only */}
+            <div className="hidden lg:flex items-center gap-2 cursor-pointer hover:opacity-70 transition-opacity">
+              <div className="w-5 h-5 rounded-full overflow-hidden flex items-center justify-center bg-blue-600">
+                <Globe size={14} className="text-white" />
+              </div>
+              <span className="text-xs font-normal flex items-center gap-1">
+                International <ChevronDown size={12} />
+              </span>
+            </div>
+
+            {/* Search — always visible */}
+            <button className="p-2 hover:bg-gray-100 rounded-full transition-colors">
+              <Search size={20} strokeWidth={1.5} className="md:w-[22px] md:h-[22px]" />
+            </button>
+
+            {/* Hamburger — visible on mobile & tablet (< lg) */}
+            <button
+              id="mobile-menu-toggle"
+              className="lg:hidden flex flex-col items-center justify-center w-10 h-10 rounded-full hover:bg-gray-100 transition-colors gap-[5px]"
+              onClick={() => setMobileMenuOpen(true)}
+              aria-label="Open menu"
+            >
+              <Menu size={22} strokeWidth={1.8} className="text-black" />
+            </button>
+          </div>
+        </div>
+
+        {/* Desktop Drawers — hidden on mobile/tablet */}
+        <div className="hidden lg:block">
+          <NavigationDrawer
+            isOpen={!!activeDrawer && activeDrawer !== 'PARTNER WITH US'}
+            onClose={() => setActiveDrawer(null)}
+            data={activeDrawer && activeDrawer !== 'PARTNER WITH US' ? drawerData[activeDrawer] : null}
+          />
+          <PartnerMegaMenu
+            isOpen={activeDrawer === 'PARTNER WITH US'}
+            onClose={() => setActiveDrawer(null)}
+          />
+        </div>
+      </nav>
+
+      {/* Mobile / Tablet Menu — rendered outside <nav> to avoid z-index clipping */}
+      <MobileMenu
+        isOpen={mobileMenuOpen}
+        onClose={() => setMobileMenuOpen(false)}
+        navLinks={navLinks}
+        drawerData={drawerData}
       />
-    </nav>
+    </>
   );
 };
 

@@ -210,7 +210,7 @@ export default function HistorySlider() {
         <FiChevronRight size={18} />
       </button>
 
-      <style jsx>{`
+      <style>{`
         .scrollbar-hide::-webkit-scrollbar {
           display: none;
         }
