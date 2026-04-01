@@ -1,212 +1,247 @@
-import { useState, useEffect, useRef } from "react";
-import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
+import { useState, useRef, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { FiChevronUp, FiChevronDown } from "react-icons/fi";
 
 const slides = [
   {
     year: "1947",
     title: "THE BEGINNING",
-    subtitle: "SELECT IS BORN",
+    subtitle: "SILVER STAR GROUP IS BORN",
     description:
-      "In 1947, Eigil Nielsen founded SELECT Sport. As a former professional goalkeeper for the Danish national team, Eigil had strong opinions on ball quality and set out to create the best ball in the world.",
+      "In 1947, Eigil Nielsen founded SILVER STAR GROUP. As a former professional goalkeeper for the Danish national team, Eigil had strong opinions on ball quality and set out to create the best ball in the world.",
     image: "/football/select_fodbold_1947.avif",
-    accent: "#c8a96e",
+    accent: "#F26522",
   },
   {
     year: "1951",
     title: "EXPANDING HORIZONS",
     subtitle: "FIRST EXPORT",
     description:
-      "SELECT began exporting balls internationally in 1951, marking the beginning of its global presence in the world of sport. Quality craftsmanship crossed borders for the first time.",
+      "SILVER STAR GROUP began exporting balls internationally in 1951, marking the beginning of its global presence in the world of sport. Quality craftsmanship crossed borders for the first time.",
     image: "/football/Select_fodbold_1951_9c89cd36-273c-4fbf-83af-98a97ae4f3af.webp",
-    accent: "#7eb8a4",
+    accent: "#F26522",
   },
   {
     year: "1962",
-    title: "FIRST FOOTBALL WITH 32 PANELS",
-    subtitle: "A REVOLUTION IN DESIGN",
+    title: "THE 32-PANEL REVOLUTION",
+    subtitle: "A WORLD FIRST",
     description:
-      "In 1962, SELECT introduced one of the greatest inventions in football history — the 32-panel ball. With 32 panels (20 hexagons and 12 pentagons), SELECT managed to create the roundest ball ever. The 32-panel design means that the ball meets wind resistance later in its flight through the air, thus maintaining a stable high speed for a longer period of time. This provides a stable and more predictable flight.",
+      "In 1962, SILVER STAR GROUP introduced the world's first 32-panel football. This groundbreaking design (20 hexagons and 12 pentagons) resulted in the roundest ball ever made, providing unparalleled flight stability.",
     image: "/football/Select_fodbold_1962_cd927d76-7d9c-490d-82cd-8531602753e5.webp",
-    accent: "#d4a843",
+    accent: "#F26522",
   },
   {
     year: "1972",
-    title: "FIRST HANDBALL WITH 32 PANELS",
+    title: "HANDBALL EVOLUTION",
     subtitle: "SHAPING THE GAME",
     description:
-      "In 1972, SELECT entered the world of handball in earnest when the first 32-panel ball was launched. This innovation changed the sport forever and set a new standard for handball manufacturing worldwide.",
+      "SILVER STAR GROUP expanded its 32-panel innovation to handball in 1972. This changed the sport forever, setting a new global standard for grip, roundness, and professional performance.",
     image: "/football/Select_harndbold_1972.webp",
-    accent: "#a8b8c8",
-  },
-  {
-    year: "1974",
-    title: "WORLD CUP OFFICIAL",
-    subtitle: "GLOBAL RECOGNITION",
-    description:
-      "SELECT balls were used in major international tournaments in 1974, cementing the brand's reputation as the gold standard in ball manufacturing at the highest levels of competition.",
-    image: "/football/Select_fodbold_1951_9c89cd36-273c-4fbf-83af-98a97ae4f3af.webp",
-    accent: "#c87a5a",
+    accent: "#F26522",
   },
   {
     year: "2012",
-    title: "TECHNOLOGICAL INNOVATION",
-    subtitle: "NEW ERA BEGINS",
+    title: "TECH INNOVATION",
+    subtitle: "DIGITAL ERA",
     description:
-      "SELECT introduced cutting-edge materials and manufacturing techniques in 2012, combining decades of craft knowledge with modern technology to produce balls of unparalleled quality and performance.",
+      "Combining 75 years of craftsmanship with modern technology, SILVER STAR GROUP introduced high-tech materials that redefined touch and durability for the modern professional athlete.",
     image: "/football/Select_Brillant_Super_iBall_fodbold_2022_061cbe02-ff5c-4b13-b07d-6a81a0bb2298.webp",
-    accent: "#8a7eb8",
+    accent: "#F26522",
   },
   {
     year: "2018",
-    title: "SUSTAINABILITY FOCUS",
-    subtitle: "PLAYING FOR THE PLANET",
+    title: "SUSTAINABILITY",
+    subtitle: "GREENER SILVER STAR GROUP",
     description:
-      "In 2018, SELECT committed to sustainable production practices. The company began integrating eco-friendly materials into its manufacturing process without compromising on the legendary SELECT quality.",
+      "A commitment to the planet. SILVER STAR GROUP began integrating recycled materials into the manufacturing process, proving that world-class performance and sustainability can go hand-in-hand.",
     image: "/football/Futsal_-_Talento__colour_white_blue.jpg",
-    accent: "#6aaa7c",
-  },
-  {
-    year: "2021",
-    title: "DIGITAL TRANSFORMATION",
-    subtitle: "SMART SPORT",
-    description:
-      "SELECT embraced digital innovation in 2021, launching connected ball technologies and expanding its digital presence to bring the brand closer to athletes and fans around the world.",
-    image: "/football/Gymball_-_2kg___colour_black.jpg",
-    accent: "#5a9ec8",
+    accent: "#F26522",
   },
   {
     year: "2022",
-    title: "75 YEARS OF EXCELLENCE",
-    subtitle: "A LEGACY CELEBRATED",
+    title: "75 YEAR LEGACY",
+    subtitle: "STILL CRAFTING",
     description:
-      "SELECT celebrated 75 years of ball-making excellence in 2022. From a small Danish workshop to a global leader, the journey has been defined by innovation, quality, and an unrelenting passion for the beautiful game.",
+      "From a small workshop to a global leader, the journey has been defined by innovation and a passion for the beautiful game. 75 years later, the mission remains the same: the best ball in the world.",
     image: "/football/Brillant_Super_UZ_Allsvenskan__colour_white_red (1).jpg",
-    accent: "#d4a843",
+    accent: "#F26522",
   },
 ];
 
 export default function HistorySlider() {
-  const [current, setCurrent] = useState(2); // start at 1962
-  const [animating, setAnimating] = useState(false);
-  const [direction, setDirection] = useState("right");
+  const [current, setCurrent] = useState(2);
+  const [isExpanded, setIsExpanded] = useState(false);
   const timelineRef = useRef(null);
+  const mobileTimelineRef = useRef(null);
 
-  const goTo = (index, dir) => {
-    if (animating || index === current) return;
-    setDirection(dir !== undefined ? dir : index > current ? "right" : "left");
-    setAnimating(true);
-    setTimeout(() => {
-      setCurrent(index);
-      setAnimating(false);
-    }, 400);
+  const goTo = (index) => {
+    if (index === current) return;
+    setIsExpanded(false);
+    setCurrent(index);
   };
 
-  const prev = () => goTo(current > 0 ? current - 1 : slides.length - 1, "left");
-  const next = () => goTo(current < slides.length - 1 ? current + 1 : 0, "right");
+  const prev = () => goTo(current > 0 ? current - 1 : slides.length - 1);
+  const next = () => goTo(current < slides.length - 1 ? current + 1 : 0);
 
   const slide = slides[current];
 
-  // Scroll timeline into view
+  // Scroll active year into view on mobile
   useEffect(() => {
-    if (timelineRef.current) {
-      const activeEl = timelineRef.current.querySelector(".timeline-active");
+    if (mobileTimelineRef.current) {
+      const activeEl = mobileTimelineRef.current.children[current];
       if (activeEl) {
-        activeEl.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "center" });
+        activeEl.scrollIntoView({ behavior: "smooth", inline: "center", block: "nearest" });
       }
     }
   }, [current]);
 
   return (
-    <div className="relative w-full min-h-screen font-sans overflow-hidden bg-gray-150">
-      {/* Background year watermark */}
-      <div className="absolute inset-0 flex items-end justify-center pointer-events-none select-none overflow-hidden z-0">
-        <span
-          className={`font-black tracking-tighter leading-none transition-all duration-500 text-8xl md:text-9xl lg:text-[22rem] opacity-${animating ? '0' : '100'}`}
-          style={{ color: "rgba(0,0,0,0.055)", lineHeight: 1, paddingBottom: "8vh" }}
-        >
-          {slide.year}
-        </span>
+    <section className="relative w-full min-h-[90svh] bg-[var(--primary)] flex items-center py-20 overflow-hidden">
+
+      {/* Background Watermark Year */}
+      <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none z-0">
+        <AnimatePresence mode="wait">
+          <motion.span
+            key={slide.year}
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 0.05, scale: 1 }}
+            exit={{ opacity: 0, scale: 1.1 }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+            className="font-black text-[25vw] md:text-[20rem] leading-none text-[var(--secondary)]"
+          >
+            {slide.year}
+          </motion.span>
+        </AnimatePresence>
       </div>
 
-      {/* Main content */}
-      <div className="relative z-10 w-full grid grid-cols-1 lg:grid-cols-2 items-center px-6 md:px-16 lg:px-20 py-16 lg:py-24 gap-8 lg:gap-16">
-        {/* Left: Image */}
-        <div className={`flex items-center justify-center transition-all duration-400 ${animating ? 'opacity-0' : 'opacity-100'} ${animating ? (direction === 'right' ? '-translate-x-10' : 'translate-x-10') : 'translate-x-0'}`}>
-          <img
-            src={slide.image}
-            alt={slide.title}
-            className="w-64 md:w-80 lg:w-[560px] h-64 md:h-80 lg:h-[560px] object-cover   "
-          />
-        </div>
+      <div className="w-[92%] mx-auto relative z-10">
+        <div className="flex flex-col lg:flex-row items-center gap-10 lg:gap-20 h-full">
 
-        {/* Right: Text - Positioned higher */}
-        <div className={`transition-all duration-400 flex items-start justify-center ${animating ? 'opacity-0' : 'opacity-100'} ${animating ? (direction === 'right' ? 'translate-x-10' : '-translate-x-10') : 'translate-x-0'}`}>
-          <div className="mt-[-2rem]">
-            <p
-              className="uppercase tracking-widest font-normal mb-3 text-xs md:text-sm"
-              style={{ color: slide.accent, letterSpacing: "0.2em", fontFamily: "'Arial', sans-serif" }}
-            >
-              {slide.subtitle}
-            </p>
-            <h1 className="font-normal uppercase leading-tight mb-6 text-2xl md:text-3xl lg:text-5xl text-gray-900" style={{ lineHeight: 1.1, fontFamily: "'Arial', sans-serif" }}>
-              {slide.title}
-            </h1>
-            <p className="text-sm md:text-base text-gray-600 leading-relaxed">
-              {slide.description}
-            </p>
+          {/* Column 1: Vertical Timeline (approx 10%) */}
+          <div className="hidden lg:flex flex-col items-center relative h-[500px]">
+            {/* Timeline Line */}
+            <div className="absolute top-0 bottom-0 w-px bg-[var(--secondary)]/10" />
+            <motion.div
+              className="absolute top-0 w-px bg-[var(--accent)]"
+              animate={{ height: `${(current / (slides.length - 1)) * 100}%` }}
+              transition={{ duration: 0.6, ease: "easeInOut" }}
+            />
+
+            {/* Year Markers */}
+            <div className="flex flex-col justify-between h-full relative z-10">
+              {slides.map((s, i) => (
+                <button
+                  key={s.year}
+                  onClick={() => goTo(i)}
+                  className="group relative flex items-center justify-center py-4 outline-none"
+                >
+                  {/* Dot */}
+                  <motion.div
+                    animate={{
+                      scale: i === current ? 1.5 : 1,
+                      backgroundColor: i === current ? "var(--accent)" : "rgba(30, 27, 110, 0.2)"
+                    }}
+                    className="w-3 h-3 rounded-full transition-colors"
+                  />
+
+                  {/* Year Label */}
+                  <span className={`absolute left-8 text-sm font-bold tracking-widest transition-all duration-300 whitespace-nowrap ${i === current ? 'text-[var(--secondary)] scale-110' : 'text-[var(--secondary)]/30 group-hover:text-[var(--secondary)]/60'}`}>
+                    {s.year}
+                  </span>
+                </button>
+              ))}
+            </div>
           </div>
-        </div>
-      </div>
 
-      {/* Timeline bar */}
-      <div className="relative z-20 w-full pb-8 md:pb-10">
-        <div className="relative px-6 md:px-16 lg:px-20">
-          {/* Line */}
-          <div className="absolute top-5 left-6 md:left-16 lg:left-20 right-6 md:right-16 lg:right-20 h-px bg-gray-300"></div>
-
-          {/* Dots + labels */}
+          {/* Mobile Horizontal Timeline (visible only on md and below) */}
           <div
-            ref={timelineRef}
-            className="flex justify-between items-start overflow-x-auto scrollbar-hide pb-1 gap-2 md:gap-4"
+            ref={mobileTimelineRef}
+            className="flex lg:hidden w-full overflow-x-auto scrollbar-hide gap-10 pb-6 border-b border-[var(--secondary)]/10 mb-8 px-[4%]"
           >
             {slides.map((s, i) => (
               <button
-                key={s.year}
+                key={`mob-${s.year}`}
                 onClick={() => goTo(i)}
-                className={`timeline-${i === current ? "active" : "dot"} flex flex-col items-center flex-shrink-0 min-w-[60px] md:min-w-[70px] outline-none`}
+                className={`flex-shrink-0 text-xl font-black tracking-tighter transition-all duration-300 ${i === current ? 'text-[var(--accent)] scale-110' : 'text-[var(--secondary)]/30'}`}
               >
-                <div
-                  className={`w-4 h-4 rounded-full transition-all duration-300 mb-1.5 ${i === current
-                      ? 'w-5 h-5 bg-gray-900 border-3 border-gray-900 scale-110 shadow-lg'
-                      : 'w-2.5 h-2.5 bg-gray-400 border-2 border-gray-400'
-                    }`}
-                />
-                <span
-                  className={`text-xs md:text-sm transition-all duration-300 ${i === current ? 'text-gray-900 font-bold' : 'text-gray-500 font-normal'
-                    }`}
-                >
-                  {s.year}
-                </span>
+                {s.year}
               </button>
             ))}
           </div>
+
+          {/* Column 2: Text Content (approx 40%) */}
+          <div className="flex-1 flex flex-col justify-center max-w-xl order-2 lg:order-1">
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={slide.year}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+                transition={{ duration: 0.5, ease: "easeOut" }}
+              >
+                <p className="uppercase tracking-[0.3em] font-black text-[var(--accent)] text-[10px] md:text-xs mb-4">
+                  {slide.subtitle}
+                </p>
+                <h2 className="text-4xl md:text-6xl font-black text-[var(--secondary)] leading-none mb-8">
+                  {slide.title}
+                </h2>
+
+                <div className="relative">
+                  <p className={`text-sm md:text-base text-[var(--secondary)]/70 leading-relaxed transition-all duration-300 ${!isExpanded ? 'line-clamp-4' : ''}`}>
+                    {slide.description}
+                  </p>
+                  {slide.description.length > 150 && (
+                    <button
+                      onClick={() => setIsExpanded(!isExpanded)}
+                      className="mt-4 text-[10px] md:text-xs font-black tracking-widest uppercase text-[var(--secondary)] hover:text-[var(--accent)] transition-all flex items-center gap-2"
+                    >
+                      {isExpanded ? (
+                        <>SEE LESS <FiChevronUp /></>
+                      ) : (
+                        <>SEE MORE <FiChevronDown /></>
+                      )}
+                    </button>
+                  )}
+                </div>
+
+                {/* Navigation Arrows for content area */}
+                <div className="flex items-center gap-4 mt-12">
+                  <button onClick={prev} className="w-12 h-12 rounded-full border border-[var(--secondary)]/10 flex items-center justify-center hover:bg-[var(--secondary)] hover:text-white transition-all duration-300">
+                    <FiChevronUp size={20} className="rotate-[-90deg] lg:rotate-0" />
+                  </button>
+                  <button onClick={next} className="w-12 h-12 rounded-full border border-[var(--secondary)]/10 flex items-center justify-center hover:bg-[var(--secondary)] hover:text-white transition-all duration-300">
+                    <FiChevronDown size={20} className="rotate-[-90deg] lg:rotate-0" />
+                  </button>
+                </div>
+              </motion.div>
+            </AnimatePresence>
+          </div>
+
+          {/* Column 3: Visual Visual (approx 50%) */}
+          <div className="flex-[1.2] flex items-center justify-center order-1 lg:order-2">
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={slide.year}
+                initial={{ opacity: 0, scale: 0.9, x: 50 }}
+                animate={{ opacity: 1, scale: 1, x: 0 }}
+                exit={{ opacity: 0, scale: 1.1, x: -50 }}
+                transition={{ duration: 0.6, ease: "circOut" }}
+                className="relative w-full aspect-square md:max-w-2xl"
+              >
+                {/* Floating Shadow */}
+                <div className="absolute bottom-[10%] left-1/2 -translate-x-1/2 w-[60%] h-[5%] bg-black/10 blur-2xl rounded-full" />
+
+                <img
+                  src={slide.image}
+                  alt={slide.title}
+                  className="w-full h-full object-contain filter drop-shadow-2xl"
+                />
+              </motion.div>
+            </AnimatePresence>
+          </div>
+
         </div>
       </div>
-
-      {/* Prev / Next arrows */}
-      <button
-        onClick={prev}
-        className="absolute right-[45%] md:right-16 lg:right-20 bottom-2 md:bottom-20 lg:bottom-30 w-9 h-9 md:w-12 md:h-12 rounded-full border border-gray-300 bg-white flex items-center justify-center cursor-pointer z-30 shadow-lg transition-all duration-200 hover:bg-gray-900 hover:text-white mr-10 md:mr-14 lg:mr-16"
-      >
-        <FiChevronLeft size={18} />
-      </button>
-
-      <button
-        onClick={next}
-        className="absolute right-[40%] md:right-16 lg:right-20 bottom-2 md:bottom-20 lg:bottom-30 w-9 h-9 md:w-12 md:h-12 rounded-full border border-gray-300 bg-white flex items-center justify-center cursor-pointer z-30 shadow-lg transition-all duration-200 hover:bg-gray-900 hover:text-white"
-      >
-        <FiChevronRight size={18} />
-      </button>
 
       <style>{`
         .scrollbar-hide::-webkit-scrollbar {
@@ -217,6 +252,6 @@ export default function HistorySlider() {
           scrollbar-width: none;
         }
       `}</style>
-    </div>
+    </section>
   );
 }

@@ -4,9 +4,9 @@ const blogs = [
   {
     id: 1,
     tag: "Anniversary",
-    title: "SELECT Sport celebrates 75 years!",
+    title: "SILVER STAR GROUP Sport celebrates 75 years!",
     excerpt:
-      "On May 4, it will be 75 years since SELECT was founded in 1947 by the Danish national football team goalkeeper Eigil Nielsen.",
+      "On May 4, it will be 75 years since SILVER STAR GROUP was founded in 1947 by the Danish national football team goalkeeper Eigil Nielsen.",
     date: "May 4, 2022",
     image: "https://images.unsplash.com/photo-1614632537190-23e4146777db?w=600&q=80",
   },
@@ -15,7 +15,7 @@ const blogs = [
     tag: "Innovation",
     title: "The first football with an integrated tracking sensor",
     excerpt:
-      "Danish SELECT and German KINEXON have jointly developed the intelligent football SELECT Brillant Super iBall.",
+      "Danish SILVER STAR GROUP and German KINEXON have jointly developed the intelligent football SILVER STAR GROUP Brillant Super iBall.",
     date: "Apr 20, 2022",
     image: "https://images.unsplash.com/photo-1579952363873-27f3bade9f55?w=600&q=80",
   },
@@ -24,7 +24,7 @@ const blogs = [
     tag: "Partnership",
     title: "The world's longest football partnership turns 70 years!",
     excerpt:
-      "The ball from SELECT has a very special place in Danish football history, and it is therefore also a legendary partnership for the national team football.",
+      "The ball from SILVER STAR GROUP has a very special place in Danish football history, and it is therefore also a legendary partnership for the national team football.",
     date: "Oct 12, 2021",
     image: "https://images.unsplash.com/photo-1560272564-c83b66b1ad12?w=600&q=80",
   },
@@ -42,7 +42,7 @@ function CalendarIcon() {
 
 function BlogCard({ blog }) {
   return (
-    <article className="group border-b border-gray-100 overflow-hidden cursor-pointer hover:bg-gray-50 transition-colors duration-200 bg-white h-full">
+    <article className="group border-b border-[var(--secondary)]/10 overflow-hidden cursor-pointer hover:bg-[var(--secondary)]/5 transition-colors duration-200 bg-white h-full">
       <div className="w-full h-[200px] bg-gray-100 overflow-hidden">
         <img
           src={blog.image}
@@ -52,16 +52,16 @@ function BlogCard({ blog }) {
         />
       </div>
       <div className="p-4 md:p-5">
-        <span className="inline-block text-[11px] font-semibold uppercase tracking-widest text-gray-400 mb-2">
+        <span className="inline-block text-[11px] font-semibold uppercase tracking-widest text-[var(--accent)] mb-2">
           {blog.tag}
         </span>
-        <h3 className="text-[15px] font-bold text-gray-900 leading-snug mb-3">
+        <h3 className="text-[15px] font-bold text-[var(--secondary)] leading-snug mb-3">
           {blog.title}
         </h3>
-        <p className="text-[13px] text-gray-500 leading-relaxed mb-4">
+        <p className="text-[13px] text-[var(--secondary)]/60 leading-relaxed mb-4">
           {blog.excerpt}
         </p>
-        <div className="flex items-center gap-1.5 text-[12px] text-gray-400">
+        <div className="flex items-center gap-1.5 text-[12px] text-[var(--secondary)]/50">
           <CalendarIcon />
           <span>{blog.date}</span>
         </div>
@@ -87,7 +87,7 @@ export default function BlogSection() {
   };
 
   return (
-    <section className="w-full bg-white py-[5%] px-[5%]">
+    <section className="w-full bg-[var(--primary)] py-[5%] px-[5%]">
       <div className="w-full">
 
        
@@ -115,7 +115,7 @@ export default function BlogSection() {
           <div className="flex items-center justify-center gap-4 mt-5">
             <button
               onClick={prev}
-              className="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center text-gray-500 hover:border-gray-800 transition-colors"
+              className="w-8 h-8 rounded-full border border-[var(--secondary)]/10 flex items-center justify-center text-[var(--secondary)]/60 hover:border-[var(--accent)] hover:text-[var(--accent)] transition-colors"
             >
               <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
                 <path d="M10 3L5 8l5 5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
@@ -127,14 +127,14 @@ export default function BlogSection() {
                 <button
                   key={i}
                   onClick={() => setCurrent(i)}
-                  className={`rounded-full transition-all duration-200 ${i === current ? "w-4 h-2 bg-gray-900" : "w-2 h-2 bg-gray-300"}`}
+                  className={`rounded-full transition-all duration-200 ${i === current ? "w-4 h-2 bg-[var(--accent)]" : "w-2 h-2 bg-[var(--secondary)]/20"}`}
                 />
               ))}
             </div>
 
             <button
               onClick={next}
-              className="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center text-gray-500 hover:border-gray-800 transition-colors"
+              className="w-8 h-8 rounded-full border border-[var(--secondary)]/10 flex items-center justify-center text-[var(--secondary)]/60 hover:border-[var(--accent)] hover:text-[var(--accent)] transition-colors"
             >
               <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
                 <path d="M6 3l5 5-5 5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />

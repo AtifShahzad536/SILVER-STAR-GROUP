@@ -6,7 +6,7 @@ const VIDEO_URL =
 
 const Hero = () => {
   return (
-    <section className="relative w-full overflow-hidden bg-black h-[31svh] md:h-[100svh]">
+    <section className="relative w-full overflow-hidden bg-[var(--secondary)] h-[31svh] md:h-[100svh]">
 
       {/* Video */}
       <video
@@ -19,28 +19,29 @@ const Hero = () => {
       />
 
       {/* Overlay */}
-      <div className="absolute inset-0 bg-black/35" />
+      <div className="absolute inset-0 bg-[var(--secondary)]/35" />
 
-      {/* Content */}
-      <div className="absolute inset-0 z-10 flex flex-col items-center justify-end pb-[8%] px-[5%]">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.9, ease: 'easeOut' }}
-          className="flex flex-col items-center gap-4 w-full"
-        >
-          <h1 className="text-white font-bold tracking-widest uppercase text-center text-[11px] md:text-lg">
-            OFFICIAL BALL SUPPLIER TO MAJOR LEAGUES WORLDWIDE
-          </h1>
-
-          <motion.button
-            whileHover={{ scale: 1.05, backgroundColor: '#fff', color: '#000' }}
-            whileTap={{ scale: 0.97 }}
-            className="border border-white bg-transparent text-white font-semibold tracking-widest uppercase text-[9px] md:text-sm px-4 py-2 md:px-10 md:py-4 transition-all duration-300 hover:bg-white hover:text-black"
+      <div className="absolute inset-0 z-10 flex flex-col items-center justify-end pb-[8%]">
+        <div className="w-[92%] mx-auto flex flex-col items-center">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.9, ease: 'easeOut' }}
+            className="flex flex-col items-center gap-4 w-full"
           >
-            Read about the Czech league and other top leagues
-          </motion.button>
-        </motion.div>
+            <h1 className="text-white font-bold tracking-widest uppercase text-center text-[11px] md:text-lg">
+              OFFICIAL BALL SUPPLIER TO MAJOR LEAGUES WORLDWIDE
+            </h1>
+  
+            <motion.button
+              whileHover={{ scale: 1.05, backgroundColor: '#F26522', color: '#1E1B6E', borderColor: '#F26522' }}
+              whileTap={{ scale: 0.97 }}
+              className="border border-white bg-transparent text-white font-semibold tracking-widest uppercase text-[9px] md:text-sm px-4 py-2 md:px-10 md:py-4 transition-all duration-300"
+            >
+              Read about the Czech league and other top leagues
+            </motion.button>
+          </motion.div>
+        </div>
       </div>
 
     </section>

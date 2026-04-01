@@ -30,9 +30,9 @@ const footerLinks = {
 
 const Footer = () => {
   return (
-    <footer className="w-full bg-black text-white">
+    <footer className="w-full bg-[var(--secondary)] text-white">
       {/* Top Section */}
-      <div className="max-w-[1440px] mx-auto px-6 pt-20 pb-12">
+      <div className="w-[92%] mx-auto pt-20 pb-12">
         <div className="grid grid-cols-1 md:grid-cols-6 gap-12">
 
           {/* Brand Column */}
@@ -43,7 +43,7 @@ const Footer = () => {
               </div>
               <span className="text-2xl font-black tracking-tighter">SELECT</span>
             </div>
-            <p className="text-sm text-gray-400 leading-relaxed mb-8 max-w-[260px]">
+            <p className="text-sm text-white/50 leading-relaxed mb-8 max-w-[260px]">
               Since 1947, Select Sport has been manufacturing premium sports equipment trusted by professional athletes and leagues worldwide.
             </p>
             {/* Social Icons */}
@@ -57,9 +57,9 @@ const Footer = () => {
                 <button
                   key={label}
                   aria-label={label}
-                  className="w-9 h-9 rounded-full border border-gray-700 flex items-center justify-center hover:bg-white hover:text-black hover:border-white transition-all duration-200"
+                  className="w-9 h-9 rounded-full border border-white/20 flex items-center justify-center hover:bg-[var(--accent)] hover:text-white hover:border-[var(--accent)] transition-all duration-200 group"
                 >
-                  {icon}
+                  <span className="group-hover:scale-110 transition-transform">{icon}</span>
                 </button>
               ))}
             </div>
@@ -74,7 +74,7 @@ const Footer = () => {
                   <li key={link}>
                     <a
                       href="#"
-                      className="text-sm text-gray-400 hover:text-white transition-colors duration-200 tracking-wide"
+                      className="text-sm text-white/60 hover:text-[var(--accent)] transition-colors duration-200 tracking-wide"
                     >
                       {link}
                     </a>
@@ -86,19 +86,19 @@ const Footer = () => {
         </div>
 
         {/* Newsletter */}
-        <div className="mt-16 pt-12 border-t border-gray-800">
+        <div className="mt-16 pt-12 border-t border-white/10">
           <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
             <div>
               <h4 className="text-xl font-black tracking-tight uppercase mb-1">Stay in the Game</h4>
               <p className="text-sm text-gray-400">Get the latest news, products and offers straight to your inbox.</p>
             </div>
-            <div className="flex w-full md:w-auto">
+            <div className="flex w-full md:w-auto shadow-xl">
               <input
                 type="email"
                 placeholder="Your email address"
-                className="bg-gray-900 text-white text-sm px-5 py-3 border border-gray-700 focus:outline-none focus:border-white transition-colors w-full md:w-72 placeholder:text-gray-600"
+                className="bg-white/5 text-white text-sm px-5 py-3 border border-white/10 focus:outline-none focus:border-[var(--accent)] transition-colors w-full md:w-72 placeholder:text-white/30"
               />
-              <button className="bg-white text-black px-6 py-3 text-xs font-black tracking-widest hover:bg-gray-200 transition-colors whitespace-nowrap">
+              <button className="bg-[var(--accent)] text-white px-6 py-3 text-xs font-black tracking-widest hover:bg-[var(--accent)]/90 transition-colors whitespace-nowrap">
                 SUBSCRIBE
               </button>
             </div>
@@ -107,14 +107,14 @@ const Footer = () => {
       </div>
 
       {/* Bottom Bar */}
-      <div className="border-t border-gray-800">
-        <div className="max-w-[1440px] mx-auto px-6 py-5 flex flex-col md:flex-row items-center justify-between gap-3">
-          <p className="text-xs text-gray-600 tracking-wide">
+      <div className="border-t border-white/10">
+        <div className="w-[92%] mx-auto py-5 flex flex-col md:flex-row items-center justify-between gap-3">
+          <p className="text-xs text-white/30 tracking-wide">
             © {new Date().getFullYear()} Select Sport A/S. All rights reserved.
           </p>
           <div className="flex items-center gap-6">
             {['Privacy Policy', 'Cookie Policy', 'Terms of Service'].map((item) => (
-              <a key={item} href="#" className="text-xs text-gray-600 hover:text-white transition-colors tracking-wide">
+              <a key={item} href="#" className="text-xs text-white/30 hover:text-white transition-colors tracking-wide">
                 {item}
               </a>
             ))}

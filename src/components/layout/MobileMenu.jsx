@@ -64,7 +64,7 @@ const NavItem = ({ link, data, isExpanded, onToggle, linkIdx, isMenuOpen }) => {
   return (
     <li
       style={{
-        borderBottom: '1px solid #f3f4f6',
+        borderBottom: '1px solid var(--secondary-light, #f3f4f6)',
         opacity: isMenuOpen ? 1 : 0,
         transform: isMenuOpen ? 'translateY(0)' : 'translateY(14px)',
         transition: `opacity 360ms ease ${60 + linkIdx * 45}ms,
@@ -83,7 +83,7 @@ const NavItem = ({ link, data, isExpanded, onToggle, linkIdx, isMenuOpen }) => {
       >
         <span style={{
           fontSize: 12.5, fontWeight: 700,
-          letterSpacing: '0.13em', color: '#111',
+          letterSpacing: '0.13em', color: 'var(--secondary)',
         }}>
           {link}
         </span>
@@ -92,7 +92,7 @@ const NavItem = ({ link, data, isExpanded, onToggle, linkIdx, isMenuOpen }) => {
             size={17}
             strokeWidth={1.8}
             style={{
-              color: '#9ca3af', flexShrink: 0,
+              color: 'var(--secondary)', opacity: 0.3, flexShrink: 0,
               transform: isExpanded ? 'rotate(180deg)' : 'rotate(0deg)',
               transition: 'transform 360ms cubic-bezier(0.4,0,0.2,1)',
             }}
@@ -133,7 +133,7 @@ const CategoryList = ({ cats, linkKey }) => {
         const isCatOpen = expandedCat === catKey;
 
         return (
-          <li key={idx} style={{ borderLeft: '2px solid #f0f0f0', marginLeft: 4 }}>
+          <li key={idx} style={{ borderLeft: '2px solid var(--secondary)', marginLeft: 4 }}>
             {subCats.length > 0 ? (
               <>
                 {/* Category button */}
@@ -148,7 +148,7 @@ const CategoryList = ({ cats, linkKey }) => {
                 >
                   <span style={{
                     fontSize: 12, fontWeight: 600,
-                    letterSpacing: '0.07em', color: '#374151',
+                    letterSpacing: '0.07em', color: 'var(--secondary)',
                   }}>
                     {catName}
                   </span>
@@ -156,7 +156,7 @@ const CategoryList = ({ cats, linkKey }) => {
                     size={13}
                     strokeWidth={2}
                     style={{
-                      color: isCatOpen ? '#111' : '#bbb', flexShrink: 0,
+                      color: isCatOpen ? 'var(--accent)' : 'var(--secondary)', opacity: isCatOpen ? 1 : 0.2, flexShrink: 0,
                       transform: isCatOpen ? 'rotate(180deg)' : 'rotate(0deg)',
                       transition: 'transform 320ms cubic-bezier(0.4,0,0.2,1), color 200ms',
                     }}
@@ -173,7 +173,7 @@ const CategoryList = ({ cats, linkKey }) => {
               <div style={{ padding: '10px 0 10px 16px', cursor: 'pointer' }}>
                 <span style={{
                   fontSize: 12, fontWeight: 500,
-                  letterSpacing: '0.07em', color: '#374151',
+                  letterSpacing: '0.07em', color: 'var(--secondary)',
                 }}>
                   {catName}
                 </span>
@@ -197,7 +197,7 @@ const SubCatList = ({ subCats }) => (
         style={{
           display: 'flex', alignItems: 'center', gap: 10,
           padding: '7px 0 7px 16px',
-          borderLeft: '1px solid #f3f4f6',
+          borderLeft: '1px solid var(--secondary)',
           cursor: 'pointer',
         }}
       >
@@ -214,7 +214,7 @@ const SubCatList = ({ subCats }) => (
         )}
         <span style={{
           fontSize: 11.5, fontWeight: 500,
-          letterSpacing: '0.06em', color: '#6b7280',
+          letterSpacing: '0.06em', color: 'var(--secondary)', opacity: 0.6,
         }}>
           {sub.name}
         </span>
@@ -249,10 +249,10 @@ const MobileMenu = ({ isOpen, onClose, navLinks, drawerData }) => {
         onClick={onClose}
         style={{
           position: 'fixed', inset: 0, zIndex: 70,
-          background: 'rgba(0,0,0,0.52)',
+          background: 'var(--secondary)',
+          opacity: isOpen ? 0.5 : 0,
           backdropFilter: 'blur(5px)',
           WebkitBackdropFilter: 'blur(5px)',
-          opacity: isOpen ? 1 : 0,
           pointerEvents: isOpen ? 'auto' : 'none',
           transition: 'opacity 350ms ease',
         }}
@@ -264,7 +264,7 @@ const MobileMenu = ({ isOpen, onClose, navLinks, drawerData }) => {
           position: 'fixed', bottom: 0, left: 0, right: 0,
           zIndex: 75,
           height: '92dvh',
-          background: '#ffffff',
+          background: 'var(--primary)',
           borderTopLeftRadius: 22, borderTopRightRadius: 22,
           boxShadow: '0 -14px 60px rgba(0,0,0,0.2)',
           display: 'flex', flexDirection: 'column',
@@ -284,7 +284,7 @@ const MobileMenu = ({ isOpen, onClose, navLinks, drawerData }) => {
         <div style={{
           display: 'flex', alignItems: 'center', justifyContent: 'space-between',
           padding: '10px 20px 12px',
-          borderBottom: '1px solid #f3f4f6',
+          borderBottom: '1px solid var(--secondary-light, #f3f4f6)',
         }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 7, cursor: 'pointer' }}>
             <div style={{ position: 'relative', width: 30, height: 30 }}>
@@ -294,7 +294,7 @@ const MobileMenu = ({ isOpen, onClose, navLinks, drawerData }) => {
                 style={{ width: '100%', height: '100%', objectFit: 'contain' }}
               />
             </div>
-            <span style={{ fontSize: 17, fontWeight: 900, letterSpacing: '-0.04em', marginTop: 2 }}>
+            <span style={{ fontSize: 17, fontWeight: 900, letterSpacing: '-0.04em', marginTop: 2, color: 'var(--secondary)' }}>
               SILVER STAR
             </span>
           </div>
@@ -303,13 +303,13 @@ const MobileMenu = ({ isOpen, onClose, navLinks, drawerData }) => {
             onClick={onClose}
             style={{
               width: 36, height: 36, borderRadius: '50%',
-              background: '#f3f4f6', border: 'none', cursor: 'pointer',
+              background: 'var(--secondary)', color: '#fff', border: 'none', cursor: 'pointer',
               display: 'flex', alignItems: 'center', justifyContent: 'center',
               transition: 'background 180ms',
               flexShrink: 0,
             }}
           >
-            <X size={18} strokeWidth={1.6} />
+            <X size={18} strokeWidth={1.6} style={{ color: '#fff' }} />
           </button>
         </div>
 

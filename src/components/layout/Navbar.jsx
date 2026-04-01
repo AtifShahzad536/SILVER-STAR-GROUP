@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
 import { Search, Globe, ChevronDown, Menu } from 'lucide-react';
-import NavigationDrawer from './NavigationDrawer';
-import PartnerMegaMenu from './PartnerMegaMenu';
 import MobileMenu from './MobileMenu';
 import SearchOverlay from './SearchOverlay';
+import NavbarDropdown from './NavbarDropdown';
 
 const Navbar = () => {
-  const [activeDrawer, setActiveDrawer] = useState(null);
+  const [activeDropdown, setActiveDropdown] = useState(null);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
 
@@ -155,8 +154,8 @@ const Navbar = () => {
       ],
       bottomImage: {
         src: 'https://images.unsplash.com/photo-1522778119026-d647f0596c20?q=80&w=800&auto=format&fit=crop',
-        alt: 'Everything for your club',
-        title: 'Everything for your club'
+        alt: 'Jerseys',
+        title: 'EXCELLENT PARTNERSHIP'
       }
     }
   };
@@ -173,8 +172,8 @@ const Navbar = () => {
 
   return (
     <>
-      <nav className="sticky top-0 z-50 w-full bg-white/95 backdrop-blur-sm border-b border-gray-100">
-        <div className="max-w-[1440px] mx-auto px-4 md:px-6 h-16 md:h-20 flex items-center justify-between">
+      <nav className="sticky top-0 z-50 w-full bg-[var(--primary)]/95 backdrop-blur-sm border-b border-[var(--secondary)]/10">
+        <div className="w-[92%] mx-auto h-16 md:h-20 flex items-center justify-between">
 
           <div className="flex items-center gap-3 group cursor-pointer">
             <div className="relative w-9 h-9 md:w-11 md:h-11 flex items-center justify-center overflow-hidden">
@@ -190,34 +189,40 @@ const Navbar = () => {
           </div>
 
           {/* Desktop Navigation Links — hidden below lg */}
-          <div className="hidden lg:flex items-center gap-10">
-            {navLinks.map((link) => (
+          <div className="hidden lg:flex items-center gap-10 h-full">
+            {navLinks.map((link, idx) => (
               <div
                 key={link}
-                className="flex items-center gap-1 cursor-pointer group"
-                onClick={() => {
-                  if (drawerData[link] || link === 'PARTNER WITH US') {
-                    if (activeDrawer === link) {
-                      setActiveDrawer(null);
-                    } else {
-                      setActiveDrawer(link);
-                    }
+                className="relative flex items-center h-full gap-1 cursor-pointer group"
+                onMouseEnter={() => {
+                  if (drawerData[link]) {
+                    setActiveDropdown(link);
                   } else {
-                    // Navigate directly or handle as a standalone link
-                    console.log(`Navigating to ${link}`);
-                    setActiveDrawer(null);
+                    setActiveDropdown(null);
                   }
                 }}
+                onMouseLeave={() => setActiveDropdown(null)}
               >
-                <span className={`nav-link text-[10px] md:text-[11px] font-medium tracking-[0.15em] ${activeDrawer === link ? 'font-bold' : ''}`}>
-                  {link}
-                </span>
-                {(drawerData[link] || link === 'PARTNER WITH US') && (
-                  <ChevronDown
-                    size={14}
-                    className={`transition-transform duration-300 ${activeDrawer === link ? 'rotate-180' : 'group-hover:rotate-180'}`}
-                  />
-                )}
+                <div className="flex items-center gap-1 h-full">
+                  <span className={`nav-link text-[10px] md:text-[11px] font-medium tracking-[0.15em] transition-all duration-300 ${activeDropdown === link ? 'text-[var(--accent)] font-bold' : 'text-[var(--secondary)]'}`}>
+                    {link}
+                  </span>
+                  {drawerData[link] && (
+                    <ChevronDown
+                      size={14}
+                      className={`transition-transform duration-300 ${activeDropdown === link ? 'rotate-180 text-[var(--accent)]' : 'group-hover:rotate-180 text-[var(--secondary)]'}`}
+                    />
+                  )}
+                </div>
+
+                {/* Dropdown specific to this link */}
+                <NavbarDropdown
+                  isOpen={activeDropdown === link}
+                  activeLink={link}
+                  data={drawerData[link]}
+                  onClose={() => setActiveDropdown(null)}
+                  alignRight={idx >= navLinks.length - 3}
+                />
               </div>
             ))}
           </div>
@@ -241,7 +246,7 @@ const Navbar = () => {
               onClick={() => setSearchOpen(true)}
               aria-label="Open search"
             >
-              <Search size={20} strokeWidth={1.5} className="md:w-[22px] md:h-[22px]" />
+              <Search size={20} strokeWidth={1.5} className="md:w-[22px] md:h-[22px] text-[var(--secondary)]" />
             </button>
 
             {/* Hamburger — visible on mobile & tablet (< lg) */}
@@ -251,23 +256,12 @@ const Navbar = () => {
               onClick={() => setMobileMenuOpen(true)}
               aria-label="Open menu"
             >
-              <Menu size={22} strokeWidth={1.8} className="text-black" />
+              <Menu size={22} strokeWidth={1.8} className="text-[var(--secondary)]" />
             </button>
           </div>
         </div>
 
-        {/* Desktop Drawers — hidden on mobile/tablet */}
-        <div className="hidden lg:block">
-          <NavigationDrawer
-            isOpen={!!activeDrawer && activeDrawer !== 'PARTNER WITH US'}
-            onClose={() => setActiveDrawer(null)}
-            data={activeDrawer && activeDrawer !== 'PARTNER WITH US' ? drawerData[activeDrawer] : null}
-          />
-          <PartnerMegaMenu
-            isOpen={activeDrawer === 'PARTNER WITH US'}
-            onClose={() => setActiveDrawer(null)}
-          />
-        </div>
+        {/* Desktop Dropdown logic is now localized inside the link loop */}
       </nav>
 
       {/* Mobile / Tablet Menu — rendered outside <nav> to avoid z-index clipping */}

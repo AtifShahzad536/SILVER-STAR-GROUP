@@ -73,8 +73,8 @@ export default function ClothingShowcase() {
             draggable={false}
           />
 
-          {/* Dark overlay */}
-          <div className="absolute inset-0 bg-black/20" />
+          {/* Branded overlay */}
+          <div className="absolute inset-0 bg-[var(--secondary)]/20" />
 
           {/* CLOTHING heading + SEE MORE — overlaid on image top-center */}
           <div className="absolute top-[8%] left-0 right-0 flex flex-col items-center gap-[2%] z-10">
@@ -84,7 +84,7 @@ export default function ClothingShowcase() {
             >
               CLOTHING
             </h1>
-            <button className="border border-white/70 bg-black/30 backdrop-blur-sm text-white px-3 py-0.5 md:px-10 md:py-2.5 text-[8px] md:text-sm tracking-widest hover:bg-white hover:text-black transition-all duration-300 font-bold">
+            <button className="border border-white/70 bg-[var(--secondary)]/60 backdrop-blur-sm text-white px-3 py-0.5 md:px-10 md:py-2.5 text-[8px] md:text-sm tracking-widest hover:bg-[var(--accent)] hover:text-white transition-all duration-300 font-bold">
               SEE MORE
             </button>
           </div>
@@ -126,7 +126,7 @@ export default function ClothingShowcase() {
                 {/* Popup */}
                 {isActive && (
                   <div
-                    className="absolute z-20 bg-black/90 backdrop-blur-md border border-white/20 text-white shadow-2xl rounded"
+                    className="absolute z-20 bg-[var(--secondary)] backdrop-blur-md border border-[var(--accent)] shadow-2xl rounded"
                     style={{
                       ...getPopupPosition(spot),
                       width: "clamp(80px, 18vw, 240px)",
@@ -135,7 +135,7 @@ export default function ClothingShowcase() {
                   >
                     {/* Arrow */}
                     <div
-                      className="absolute w-[8%] h-[8%] bg-black/90 border-l border-t border-white/20"
+                      className="absolute w-[8%] h-[8%] bg-[var(--secondary)] border-l border-t border-[var(--accent)]"
                       style={getArrowStyle(spot)}
                     />
 

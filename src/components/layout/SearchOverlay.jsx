@@ -100,7 +100,7 @@ const SearchOverlay = ({ isOpen, onClose }) => {
     <>
       {/* ── Backdrop ─────────────────────────────────────────────────── */}
       <div
-        className={`fixed inset-0 z-[200] bg-black/60 backdrop-blur-sm transition-opacity duration-300 ${
+        className={`fixed inset-0 z-[200] bg-[var(--secondary)]/60 backdrop-blur-sm transition-opacity duration-300 ${
           isOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
         }`}
         onClick={onClose}
@@ -108,7 +108,7 @@ const SearchOverlay = ({ isOpen, onClose }) => {
 
       {/* ── Panel ────────────────────────────────────────────────────── */}
       <div
-        className={`fixed top-0 left-0 right-0 z-[205] bg-white shadow-2xl
+        className={`fixed top-0 left-0 right-0 z-[205] bg-[var(--primary)] shadow-2xl
           transition-all duration-[350ms] ease-[cubic-bezier(0.19,1,0.22,1)]
           ${isOpen ? 'translate-y-0 opacity-100' : '-translate-y-full opacity-0'}`}
       >
@@ -117,7 +117,7 @@ const SearchOverlay = ({ isOpen, onClose }) => {
           <Search
             size={22}
             strokeWidth={1.8}
-            className="text-gray-400 flex-shrink-0"
+            className="text-[var(--secondary)]/40 flex-shrink-0"
           />
 
           <input
@@ -127,7 +127,7 @@ const SearchOverlay = ({ isOpen, onClose }) => {
             onChange={handleChange}
             onKeyDown={handleKeyDown}
             placeholder="Search for products, gear, sports…"
-            className="flex-1 text-base sm:text-xl font-medium text-black placeholder-gray-300
+            className="flex-1 text-base sm:text-xl font-medium text-[var(--secondary)] placeholder-[var(--secondary)]/20
                        bg-transparent outline-none border-none tracking-wide"
             autoComplete="off"
             spellCheck="false"
@@ -137,19 +137,19 @@ const SearchOverlay = ({ isOpen, onClose }) => {
           {query && (
             <button
               onClick={() => { setQuery(''); setSuggestions([]); inputRef.current?.focus(); }}
-              className="p-1.5 rounded-full hover:bg-gray-100 transition-colors flex-shrink-0"
+              className="p-1.5 rounded-full hover:bg-[var(--secondary)]/5 transition-colors flex-shrink-0"
             >
-              <X size={18} className="text-gray-400" />
+              <X size={18} className="text-[var(--secondary)]/40" />
             </button>
           )}
 
           {/* Close */}
           <button
             onClick={onClose}
-            className="ml-1 p-2 rounded-full border border-gray-200 hover:bg-gray-100 transition-colors flex-shrink-0"
+            className="ml-1 p-2 rounded-full border border-[var(--secondary)]/10 hover:bg-[var(--secondary)]/5 transition-colors flex-shrink-0"
             aria-label="Close search"
           >
-            <X size={18} className="text-black" />
+            <X size={18} className="text-[var(--secondary)]" />
           </button>
         </div>
 
@@ -202,9 +202,9 @@ const SearchOverlay = ({ isOpen, onClose }) => {
                   <button
                     key={term}
                     onMouseDown={(e) => { e.preventDefault(); pickSuggestion(term); }}
-                    className="px-4 py-2 border border-gray-200 rounded-full text-xs font-medium
-                               tracking-wide text-gray-700 hover:border-black hover:text-black
-                               hover:bg-black hover:text-white transition-all duration-200"
+                    className="px-4 py-2 border border-[var(--secondary)]/10 rounded-full text-xs font-medium
+                               tracking-wide text-[var(--secondary)]/60 hover:border-[var(--accent)] hover:text-white
+                               hover:bg-[var(--accent)] transition-all duration-200"
                   >
                     {term}
                   </button>
