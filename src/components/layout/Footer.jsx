@@ -24,7 +24,7 @@ const IconX = () => (
 const footerLinks = {
   Products: ['Match Balls', 'Training Balls', 'Goalkeeper Gloves', 'Accessories', 'Clothing'],
   Sport: ['Football', 'Futsal', 'Handball', 'Volleyball', 'Rugby'],
-  Explore: ['About Select', 'Sustainability', 'Sponsorships', 'News & Stories', 'Careers'],
+  Explore: ['About Silver Star Group', 'Sustainability', 'Sponsorships', 'News & Stories', 'Careers'],
   'Partner With Us': ['Become a Dealer', 'Club Partnerships', 'League Partnerships', 'Custom Balls', 'Contact'],
 };
 
@@ -37,14 +37,18 @@ const Footer = () => {
 
           {/* Brand Column */}
           <div className="md:col-span-2">
-            <div className="flex items-center gap-2 mb-6">
-              <div className="relative w-10 h-10 flex items-center justify-center">
-                <div className="w-0 h-0 border-l-[20px] border-l-transparent border-r-[20px] border-r-transparent border-b-[35px] border-b-white" />
+            <div className="flex items-center gap-3 mb-6">
+              <div className="relative w-12 h-12 flex items-center justify-center">
+                <img 
+                  src="/logo_silverstar1.png" 
+                  alt="Silver Star Group" 
+                  className="w-full h-full object-contain brightness-0 invert" 
+                />
               </div>
-              <span className="text-2xl font-black tracking-tighter">SELECT</span>
+              <span className="text-2xl font-black tracking-tighter uppercase whitespace-nowrap">SILVER STAR GROUP</span>
             </div>
             <p className="text-sm text-white/50 leading-relaxed mb-8 max-w-[260px]">
-              Since 1947, Select Sport has been manufacturing premium sports equipment trusted by professional athletes and leagues worldwide.
+              Since 1947, Silver Star Group has been manufacturing premium sports equipment trusted by professional athletes and leagues worldwide.
             </p>
             {/* Social Icons */}
             <div className="flex items-center gap-4">
@@ -110,7 +114,7 @@ const Footer = () => {
       <div className="border-t border-white/10">
         <div className="w-[92%] mx-auto py-5 flex flex-col md:flex-row items-center justify-between gap-3">
           <p className="text-xs text-white/30 tracking-wide">
-            © {new Date().getFullYear()} Select Sport A/S. All rights reserved.
+            © {new Date().getFullYear()} Silver Star Group A/S. All rights reserved.
           </p>
           <div className="flex items-center gap-6">
             {['Privacy Policy', 'Cookie Policy', 'Terms of Service'].map((item) => (
